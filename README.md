@@ -32,7 +32,7 @@ This project is inspired by the work done on: **insert paper link**
 
 ## Configs using reward optimisation
 When defining an **experimentation** or a **training run** for a model where it's desidered to use the **reward optimisation** technique. There are some things that have to be taken into consideration.
-- **Load a pretrained module**: Following the indications from the paper, this technique gives the best performance to **fine tune** a model that has already been **pretrained** with the **Cross Entropy** loss function. In order to load a `.pkg` weights file to perform the fine tunning, add:
+- **Load a pretrained model**: Following the indications from the paper, this technique gives the best performance to **fine tune** a model that has already been **pretrained** with the **Cross Entropy** loss function. In order to load a `.pkg` weights file to perform the fine tunning, add:
   ```python
   model = dict(
     type='EncoderDecoder',
@@ -40,4 +40,26 @@ When defining an **experimentation** or a **training run** for a model where it'
     ...
   ```
   At the **config file** holding the **model settings**
-- 
+- Use **new Decode Head** and **Loss function**: Given a model using the original **Decode Head** and pretrained with the **CrossEntropy** loss:
+  ```python
+  ...
+  decode_head=dict(
+    type='<HeadName>Head',
+    ...
+    loss_decode=dict(
+      type='CrossEntropyLoss', use_sigmoid=False, loss_weight=1.0)),
+  ...
+  ```
+  Change them with the new registered modules:
+  ```python
+  ...
+  decode_head=dict(
+    type='Reward<HeadName>Head',
+    ...
+    loss_decode=dict(
+      type='CrossEntropyRewardLoss', use_sigmoid=False, loss_weight=1.0)),
+  ...
+  ```
+- **Fine tunning and param sheduler**: Since this approach is used to fine tune a model. It's important to change the sheduler according to this. Every model and experiment performs differently, but there are some things to keep in mind:
+  - **Learning rate of optimiser**: An acceptable approach is to set the starting learning rate to the value which the pretraining model ended.
+  - **Learning policy**: Since the modification of the **loss function** can somewhat perturbate the model's performance. Setting a decaying learning rate will often also yield better results.
