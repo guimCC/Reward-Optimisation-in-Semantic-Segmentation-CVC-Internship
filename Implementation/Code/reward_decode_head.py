@@ -14,6 +14,7 @@ from mmseg.utils import ConfigType, SampleList
 from ..builder import build_loss
 from ..losses import accuracy
 from ..utils import resize
+from .decode_head import BaseDecodeHead
 from mmseg.registry import MODELS
 
 
@@ -61,9 +62,6 @@ class RewardDecodeHead(BaseDecodeHead):
         
         self.mIoU_metric_loss = build_loss(dict(
             type='IoUMetricLoss', num_classes=self.num_classes, ignore_index=self.ignore_index))
-    
-        self.reinforce_loss = build_loss(dict(
-            type='CrossEntropyRewardLoss'))
         
     def loss(self, inputs: Tuple[Tensor], batch_data_samples: SampleList, train_cfg: ConfigType) -> dict:
         """
@@ -98,14 +96,28 @@ class RewardDecodeHead(BaseDecodeHead):
         Extend the base class loss_by_feat to use reinforcement learning-specific loss functions.
         """
         seg_label = self._stack_batch_gt(batch_data_samples)
-        seg_logits = resize(input=seg_logits, size=seg_label.shape[2:], mode='bilinear', align_corners=self.align_corners)
+        loss = dict()
+        seg_logits = resize(# Resize the seg_logits to the same size as the seg_label 
+            input=seg_logits,
+            size=seg_label.shape[2:],
+            mode='bilinear',
+            align_corners=self.align_corners)
         if self.sampler is not None:
             seg_weight = self.sampler.sample(seg_logits, seg_label)
         else:
             seg_weight = None
         seg_label = seg_label.squeeze(1)
 
-        loss = dict()
-        loss[self.reinforce_loss.loss_name] = self.reinforce_loss(seg_logits, seg_label, weight=seg_weight, ignore_index=self.ignore_index, reward=reward)
-        loss['acc_seg'] = accuracy(seg_logits, seg_label, ignore_index=self.ignore_index)
+        loss_decode = self.loss_decode
+        
+        loss[loss_decode.loss_name] = loss_decode(
+                  seg_logits,
+                  seg_label,
+                  weight=seg_weight,
+                  ignore_index=self.ignore_index,
+                  reward=reward)
+        
+        loss['acc_seg'] = accuracy(
+            seg_logits, seg_label, ignore_index=self.ignore_index)
+        
         return loss
