@@ -1,7 +1,5 @@
-# Reward_Optimisation_in_MMSegmentation
-This repository contains modifications necessary for implementing Reward Optimization in MMSegmentation.
-
-This project is inspired by the work done on: [Tuning computer vision models with task rewards](https://arxiv.org/abs/2302.08242) 
+# Reward Optimisation implementation in MMSegmentation
+This section of the repository contains modifications necessary for implementing Reward Optimization in MMSegmentation.
 
 ## Decode Head Using Reward Optimisation
 - Add `Code/reward_decode_head.py` to `mmsegmentation/mmseg/models/decode_heads/`.
