@@ -85,7 +85,7 @@ $^*$*promising* = with good chances to improve performance (mIoU)
 ---
 
 # Tuning computer vision models with task rewards
-
+<!-- explain the basic meanings -->
 - Align model predictions and intended usage via **reward optimisation**.
 - **REINFORCE**'s well-known **log-derivative** trick.
   - Learn $P(y|x, \theta) \rightarrow \max_{\theta} \mathbb{E}_{x \sim D} \left[ \mathbb{E}_{y \sim P(\cdot | x, \theta)} R(x, y) \right]$   
@@ -99,7 +99,7 @@ Approach:
 ---
 
 # Monte Carlo Gradient Estimator: Log Derivative Trick
-
+<!-- split in two slides -->
 - Provides a way to **estimate** the gradient of the expected reward for a given input **x**:
   - $\nabla_{\theta} \mathbb{E}_{y \sim P} \left[ R(x, y) \right] = \mathbb{E}_{y \sim P} \left[ R(x, y) \nabla_{\theta} \log P(y|x; \theta) \right]$
 - Unbiased estimate of **RHS** as an average of per-example gradients.
@@ -161,7 +161,7 @@ end function
 ---
 
 # Mean Intersection Over Union
-
+<!-- bring to the start of the section -->
 <center>
 
 ![height:400](Figures/IoU_slide.png) 
