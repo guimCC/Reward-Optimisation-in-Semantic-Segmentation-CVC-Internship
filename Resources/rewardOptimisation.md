@@ -78,6 +78,18 @@ UDA vs ADA
 
 $^*$*promising* = with good chances to improve performance (mIoU)
 
+
+---
+
+# Mean Intersection Over Union
+<center>
+
+![height:400](Figures/IoU_slide.png) 
+
+</center>
+
+- **mIoU**: Average **IoU** for each class
+
 ---
 
 # Optimisation of non differentiable functions
@@ -157,18 +169,6 @@ end function
 # IMAGE OF TRAINING WITH HIGH VARIANCE
 
 [Monte Carlo Gradient Estimation in Machine Learning | Full paper link](https://arxiv.org/pdf/1906.10652)
-
----
-
-# Mean Intersection Over Union
-<!-- bring to the start of the section -->
-<center>
-
-![height:400](Figures/IoU_slide.png) 
-
-</center>
-
-- **mIoU**: Average **IoU** for each class
 
 ---
 

@@ -1,6 +1,10 @@
 # Reward Optimisation implementation in MMSegmentation
 This section of the repository contains modifications necessary for implementing Reward Optimization in MMSegmentation.
 
+## (Optional) MMSegmentation installation
+
+
+
 ## Decode Head Using Reward Optimisation
 - Add `Code/reward_decode_head.py` to `mmsegmentation/mmseg/models/decode_heads/`.
 - For each **decode head implementation** you plan to use, such as **ASPPHead**, **FCNHead**, etc.:
