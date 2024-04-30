@@ -11,7 +11,7 @@ math: katex
 
 Tutor: Joan Serrat
 Guim Casadellà Cors
-04 - 2022
+04 - 2024
 
 ---
 # Semantic segmentation
@@ -81,7 +81,7 @@ $^*$*promising* = with good chances to improve performance (mIoU)
 
 ---
 
-# Mean Intersection Over Union
+# Goal: Mean Intersection Over Union
 <center>
 
 ![height:400](Figures/IoU_slide.png) 
@@ -93,9 +93,25 @@ $^*$*promising* = with good chances to improve performance (mIoU)
 ---
 
 # Optimisation of non differentiable functions
-
+<!-- stochastic reward function-->
 ---
 
+# Tuning computer vision models with task rewards
+
+![bg right height:98%](Figures/paper_1.png)
+
+---
+# Tuning computer vision models with task rewards
+## Some definitions
+
+- $y$ and $x$ are the **groundtruth** and **input vectors**, respectively.
+- Dataset of $N$ training examples, sampled from a distribution $D$.
+- $\theta$ are the **parameters** describing a neural network.
+- $P(y|x, \theta)$ Probability of predictiong **y** from **x** given NN is in state $\theta$.
+- $R(x, y)$ is the evaluation of the **reward** function.
+- $\nabla_{\theta}$ deontates the usual **gradient** computation of a NN.
+
+---
 # Tuning computer vision models with task rewards
 <!-- explain the basic meanings -->
 - Align model predictions and intended usage via **reward optimisation**.
@@ -111,12 +127,14 @@ Approach:
 ---
 
 # Monte Carlo Gradient Estimator: Log Derivative Trick
-<!-- split in two slides -->
 - Provides a way to **estimate** the gradient of the expected reward for a given input **x**:
   - $\nabla_{\theta} \mathbb{E}_{y \sim P} \left[ R(x, y) \right] = \mathbb{E}_{y \sim P} \left[ R(x, y) \nabla_{\theta} \log P(y|x; \theta) \right]$
 - Unbiased estimate of **RHS** as an average of per-example gradients.
 - Implemented in the model's **loss function**
 
+---
+
+# Loss function involving reward optimisation
 
 <div style="display: flex; justify-content: space-between;">
 <div class="column" style="margin-right: 10px; width: 50%;">
@@ -169,6 +187,40 @@ end function
 # IMAGE OF TRAINING WITH HIGH VARIANCE
 
 [Monte Carlo Gradient Estimation in Machine Learning | Full paper link](https://arxiv.org/pdf/1906.10652)
+
+---
+
+# OpenMMLab
+
+![bg width:100%](Figures/Openmmlab.png)
+
+---
+
+<div style="display: flex; justify-content: space-between;">
+<div class="column" style="width: 35%;">
+<br><br><br><br><br><br>
+
+# MMSegmentation
+
+</div>
+<div class="column" style="width: 65%;">
+
+<br><br><br><br><br><br><br><br>
+
+![](Figures/paperswithcode.png)
+[Papers with code](https://paperswithcode.com/task/semantic-segmentation/codeless#task-home)
+
+</div>
+</div>
+
+---
+
+# Encoder - Decoder Structure
+
+![](Figures/Semantic-Segmentation-Approaches.jpg)
+
+- **Encoder**: Feautre extractor (ResNet, ...)
+- **Decoder**: 
 
 ---
 
