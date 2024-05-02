@@ -15,9 +15,26 @@ Guim Casadellà Cors
 
 ---
 # Semantic segmentation
+<div style="display: flex; justify-content: space-between;">
+<div class="column" style="margin-right: 10px; width: 50%;">
 
-![width:500](Figures/cs1_original.png) ![width:500](Figures/cs1_groundtruth.png)
-Pixel - wise classification
+<div style=" padding:60px;">
+
+![width:500](Figures/3dogs.jpg) 
+
+</div>
+
+</div>
+<div class="column" style="margin-left: 10px; width: 50%;">
+
+![](Figures/3dogs_mask.png)
+
+</div>
+</div>
+
+
+
+**Pixel - wise classification**
 
 ---
 
@@ -190,44 +207,172 @@ end function
 
 ---
 
-# OpenMMLab
+<img src="Figures/openmmlab.png" style="width: 100%; background: transparent;">
+
 
 ![bg width:100%](Figures/Openmmlab.png)
 
 ---
 
-<div style="display: flex; justify-content: space-between;">
-<div class="column" style="width: 35%;">
-<br><br><br><br><br><br>
 
-# MMSegmentation
 
-</div>
-<div class="column" style="width: 65%;">
 
-<br><br><br><br><br><br><br><br>
 
-![](Figures/paperswithcode.png)
+
+<center>
+
+![](Figures/mmseg-logo.png)
+![height:250](Figures/paperswithcode.png)
+
+</center>
+
 [Papers with code](https://paperswithcode.com/task/semantic-segmentation/codeless#task-home)
 
-</div>
-</div>
 
 ---
 
 # Encoder - Decoder Structure
 
+<center>
+
 ![](Figures/Semantic-Segmentation-Approaches.jpg)
+
+</center>
+
 
 - **Encoder**: Feautre extractor (ResNet, ...)
 - **Decoder**: 
 
+
+
 ---
 
-# Implementation details
-- Semantic segmentation model structure (Encoder, Decode - Heads)
-- Reward computation
-- New loss function
+# Deeplabv3
+
+- **Widespread use** in numerous research papers
+- Medium **size**: Fits inavailable GPU's memory $\le 12 GB$
+- **Atrous Spatial Pyramid Pooling (ASPP)**
+
+<center>
+
+![](Figures/deeplabv3_1.png)
+
+</center>
+
+---
+
+# Implementation overview
+
+- Implemented a **custom decode head** MMsegmentation module which inherits from the **base decode head**.
+
+- Includes **reward & baseline computation** capabilities when performing a **loss forward step** in **train** mode.
+
+- Interacts with the new **reward optimisation loss** function.
+
+---
+
+# Reward and baseline computation
+
+<div style="display: flex; justify-content: space-between;">
+<div class="column" style="margin-right: 10px; width: 50%;">
+
+### Reward
+
+- Implemented in **MMSegmentation** as a new **Loss Function**
+- $R(x_i, y_i) = 1 - \frac{\sum{IoU(x_i, y_i)}}{nº \ classes}$ to **weight better** ($loss \to 0$) when $mIoU \to 1$
+
+</div>
+<div class="column" style="margin-left: 10px; width: 50%;">
+
+### Baseline 
+
+- Given a **loss forward step** on $k$ batched images
+  - $r_x = R(x, y)$ Vector of rewards
+  - $r_b = \frac{\sum{r_x} - r_x}{k-1}$ Baseline: Rewards of **other** images
+  - $r = r_x - 0.1r_b$ Reward vector fed to custom **loss function**
+
+</div>
+</div>
+
+
+
+
+---
+
+# Custom loss Implementation
+
+<div style="display: flex; justify-content: space-between;">
+<div class="column" style="margin-right: 10px; width: 50%;">
+
+### Reaward optimization step
+
+```
+function batch_loss(θ, x, y, r):
+    return (1/n) * Σ(r log P(yᵢ'|xᵢ; θ))
+end function
+
+function step_reward(θ, x, α):
+    y_sample := batch_sample(θ, x)
+    y_baseline := batch_sample(θ, x)
+    r := R(x, y_sample) - R(x, y_baseline)
+    G_r := ∇θ batch_loss(θ, x, y_sample, r)
+    return θ + αG_r
+end function
+```
+
+</div>
+<div class="column" style="margin-left: 10px; width: 50%;">
+
+### Implementation
+
+
+```
+function batch_loss(θ, x, y, r):
+    return r·cross_entropy(θ, x, y)
+end function
+```
+
+Where `cross_entropy` is a wrapper from **MMSegmentation** above `torch.nn.functional.cross_entropy`
+
+
+</div>
+</div>
+
+---
+
+# Experimentation
+
+![bg right:50%](Figures/scalars_1.png)
+
+---
+
+# Degrees of freedom
+
+- Scheduler
+- Model Structure
+- Steps
+- Baseline
+- Weights
+
+---
+
+# Scheduler
+
+---
+
+# Model Structure
+
+---
+
+# Steps
+
+---
+
+# Baseline
+
+---
+
+# Weights
 
 ---
 
