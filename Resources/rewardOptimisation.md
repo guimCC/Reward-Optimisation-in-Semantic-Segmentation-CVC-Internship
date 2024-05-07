@@ -34,12 +34,12 @@ Guim Casadellà Cors
 
 
 
-**Pixel - wise classification**
+**Pixel-wise Classification**
 
 ---
 
-# Real datasets
-## Urban environments
+# Real Datasets
+## Urban Environments
 
 <div style="display: flex; justify-content: space-between;">
 <div class="column" style="margin-right: 10px; width: 50%;">
@@ -109,27 +109,27 @@ $^*$*promising* = with good chances to improve performance (mIoU)
 
 ---
 
-# Optimisation of non differentiable functions
+# Optimization of Non-Differentiable Functions
 <!-- stochastic reward function-->
 ---
 
-# Tuning computer vision models with task rewards
+# Tuning Computer Vision Models with Task Rewards
 
 ![bg right height:98%](Figures/paper_1.png)
 
 ---
-# Tuning computer vision models with task rewards
+# Tuning Computer Vision Models with Task Rewards
 ## Some definitions
 
-- $y$ and $x$ are the **groundtruth** and **input vectors**, respectively.
+- $y$ and $x$ are the **ground truth** and **input vectors**, respectively.
 - Dataset of $N$ training examples, sampled from a distribution $D$.
 - $\theta$ are the **parameters** describing a neural network.
-- $P(y|x, \theta)$ Probability of predictiong **y** from **x** given NN is in state $\theta$.
+- $P(y|x, \theta)$ Probability of predicting **y** from **x** given NN is in state $\theta$.
 - $R(x, y)$ is the evaluation of the **reward** function.
-- $\nabla_{\theta}$ deontates the usual **gradient** computation of a NN.
+- $\nabla_{\theta}$ denotes the usual **gradient** computation of a NN.
 
 ---
-# Tuning computer vision models with task rewards
+# Tuning Computer Vision Models with Task Rewards
 <!-- explain the basic meanings -->
 - Align model predictions and intended usage via **reward optimisation**.
 - **REINFORCE**'s well-known **log-derivative** trick.
@@ -151,12 +151,12 @@ Approach:
 
 ---
 
-# Loss function involving reward optimisation
+# Loss Function Involving Reward Optimization
 
 <div style="display: flex; justify-content: space-between;">
 <div class="column" style="margin-right: 10px; width: 50%;">
 
-### MLE optimization step
+### MLE Optimization Step
 ```
 function batch_loss(θ, x, y):
     # n is the size of a mini-batch.
@@ -172,7 +172,7 @@ end function
 </div>
 <div class="column" style="margin-left: 10px; width: 50%;">
 
-### Reaward optimization step
+### Reward Optimization Step
 
 ```
 function batch_loss(θ, x, y, r):
@@ -193,13 +193,13 @@ end function
 
 ---
 
-# Reduction of variance
+# Reduction of Variance
 
 ![](Figures/high_variance.png)
 
 ---
 
-# Reduction of variance
+# Reduction of Variance
 
 - Method can suffer from **high variance** affecting the overall performance.
 - Some **variance reduction** techniques include:
@@ -243,9 +243,8 @@ end function
 
 </center>
 
-
-- **Encoder**: Feautre extractor (ResNet, ...)
-- **Decoder**: 
+- **Encoder**: Extracts features (e.g., ResNet); 
+- **Decoder**: Reconstructs output using these features, often with upsampling.
 
 
 
@@ -358,11 +357,11 @@ Where `cross_entropy` is a wrapper from **MMSegmentation** above `torch.nn.funct
 
 # Degrees of freedom
 
-- Scheduler
-- Model Structure
-- Baseline
-- Steps
-- Weights
+- **Scheduler**: Initial Learning Rate, evolution, ... 
+- **Model Structure**: Auxiliary head?.
+- **Baseline**: Definition of $r_b$.
+- **Steps**: What checkpoint to use and how many steps to take.
+- **Weights**: Use of weights in loss computation.
 
 ---
 
@@ -433,14 +432,42 @@ Where `cross_entropy` is a wrapper from **MMSegmentation** above `torch.nn.funct
 
 # Steps
 
+![](Figures/steps.png)
+
+---
+
+# Weight computation
+
+- $C_c$: Class counts
+- $T_c$: Total counts
+- $C_w$: Class weights
+
+$$C_w = \frac{1}{C_c + \text{CLS\_SMOOTH} \cdot C_w}$$
+
+$$C_w = \frac{N \cdot C_w}{\sum{C_w}}$$
+
+
 ---
 
 # Weights
 
+![](Figures/weights.png)
+
 ---
 
-# Results and future work
+# Additional Results and Future Work
+
+- Have tried the **same configuration** on the **EasyPortrait** dataset, achieving similar results.
+- In the future, plan to implement this on the **Mapillary Vistas** dataset, which starts from a lower **mIoU** since it's a more challenging task.
+- Repeat some of the experiments to establish the **mean** improvement for each result and its **variance**.
 
 
-- Achievements on different datasets
-- Future work
+
+---
+
+# Conclusions
+
+- The work shown is trying to fine-tune a model that already has extremely high accuracy. It's trying to outperform models that have been extensively tuned. This gives little room for improvement, as changes in the model's behavior make it extremely difficult to optimize its hyperparameters for significant improvements.
+- The key paper in the project also doesn't help, as it provides no details on the implementation of the new algorithm. This makes it difficult to apply those ideas to a new problem.
+- As seen, variance is a significant problem in this project. However, the proposed approach seems to address it, to some extent.
+- Overall, the general goal has been accomplished, as some configurations perform somewhat better than the original model. However, the lack of time and computing power makes it difficult to further tune the model and try to widen the gap through reward optimization.
