@@ -195,13 +195,17 @@ end function
 
 # Reduction of variance
 
+![](Figures/high_variance.png)
+
+---
+
+# Reduction of variance
+
 - Method can suffer from **high variance** affecting the overall performance.
 - Some **variance reduction** techniques include:
   - Increase the **number of samples** (batch size, nº GPUs) $V_n \propto O(\frac{1}{N})$
   - Substracting **baselines** $B$ independent to **x**. $\rightarrow  \mathbb{E}(B)=0$
   - Rolling mean?
-
-# IMAGE OF TRAINING WITH HIGH VARIANCE
 
 [Monte Carlo Gradient Estimation in Machine Learning | Full paper link](https://arxiv.org/pdf/1906.10652)
 
@@ -346,21 +350,84 @@ Where `cross_entropy` is a wrapper from **MMSegmentation** above `torch.nn.funct
 
 ---
 
+# Deeplav3 Progress
+
+![](Figures/original_trend.png)
+
+---
+
 # Degrees of freedom
 
 - Scheduler
 - Model Structure
-- Steps
 - Baseline
+- Steps
 - Weights
 
 ---
 
 # Scheduler
 
+
+
+<div style="display: flex; justify-content: space-between;">
+<div class="column" style=" width: 70%;">
+
+<center>
+
+![](Figures/LearningRates.png)
+
+</center>
+
+</div>
+<div class="column" style=" width: 50%;">
+
+- Best config: $1e-4 \rightarrow 1e-6$
+- **Lower** starting learing rate **LR** to "overcome" the change in the model's structure and loss function
+- Perform some **variance reduction** by also **lowering** the final **LR**
+
+
+</div>
+</div>
+
+
 ---
 
 # Model Structure
+
+<div style="display: flex; justify-content: space-between;">
+<div class="column" style="width: 70%;">
+
+<center>
+
+![](Figures/structure_comparision.png)
+
+</center>
+
+<!--$LR: 1e-4 \rightarrow 1e-6$ -->
+
+</div>
+<div class="column" style="width: 50%;">
+
+- Overall better performance than **original trend line**
+- **Auxiliary head** roughest start beacause facing more changes
+- Both face **high-variance** 
+
+
+</div>
+</div>
+
+---
+
+# Baseline
+
+![](Figures/baseline_comparision.png)
+
+---
+
+# Baseline
+
+![](Figures/correct_baseline.png)
 
 ---
 
@@ -368,20 +435,7 @@ Where `cross_entropy` is a wrapper from **MMSegmentation** above `torch.nn.funct
 
 ---
 
-# Baseline
-
----
-
 # Weights
-
----
-
-# Experimentation
-- Overview of the different degrees of freedom (Scheduler, LR, batch-size, ...)
-- General implementation results ? -> Reduction of variance
-- Learning rate and sheduler results
-- Batch size and baseline computation
-- Model structure (Auxiliary head)
 
 ---
 
