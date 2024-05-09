@@ -21,3 +21,11 @@ The implementation is conducted within the [MMSegmentation framework](https://mm
 ## Objectives
 
 ## Technologies Used
+
+## Utilities
+
+[](#/Implementation/Utilities) contains some useful utilities that have been used on the project.
+
+### Frequency and weight computation
+
+
