@@ -42,4 +42,12 @@ $$C_w = \frac{1}{C_c + \text{CLS\_SMOOTH} \cdot C_w} \ \ \ \ \ \ \ \ C_w = \frac
 
 ### Experimentation visualisation
 
+After performing a **MMSegmentation** training run under an example working directory `workdir_path`, the `workdir_path/id/vis_data/scalars.json` can be used to explore the experiment's results. 
+
+- [metrics_cleaner](Implementation/Utilities/Cleaner.ipynb)
+
+Given a `scalars.json` file, creates two csv files `loss.csv` and `metrics.csv` which hold the relevant information for exploration in a treatable format.
+
+- 
+
 # TODO: wrap experiment functionallity with functions to be able to "tune" the type of output plot
