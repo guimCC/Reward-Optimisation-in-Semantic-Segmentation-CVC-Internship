@@ -4,11 +4,11 @@
 **Internship Period:** January 24 - June 24
 
 ## Repo Table of Contents
-1. [Implementation Details](#Implementation)
-2. [Project Overview Slides](#Resources/rewardOptimisation.md)
+1. [Implementation Details](Implementation)
+2. [Project Overview Slides](Resources/rewardOptimisation.md)
 3. [Project Paper](#Todo)
 4. [Experiments](#Todo) <!-- Raw experiment data and insights -->
-5. [Utilities](#Implementation/Utilities/)
+5. [Utilities](Implementation/Utilities/)
 
 ## Project Overview
 
@@ -42,7 +42,7 @@ These technologies combined to create a robust development environment that supp
 
 ## Utilities
 
-[Utilities](#Implementation/Utilities) contains several useful tools that have been used in this project.
+[Utilities](Implementation/Utilities) contains several useful tools that have been used in this project.
 
 ### Frequency and Weight Computation
 
@@ -58,7 +58,7 @@ These technologies combined to create a robust development environment that supp
   - $T_c$: Total counts
   - $C_w$: Class weights
 
-  $$C_w = \frac{1}{C_c + \text{CLS\_SMOOTH} \cdot T_c} \ \ \ \ \ \ \ \ C_w = \frac{N \cdot C_w}{\sum{C_w}} $$
+  $$C_w = \frac{1}{C_c + \text{CLS\_SMOOTH} \cdot T_c} \ \ \ \ \ \ \ \ C_w = \frac{N \cdot C_w}{\sum{C_w}}$$
 
 ### Experimentation Visualization
 

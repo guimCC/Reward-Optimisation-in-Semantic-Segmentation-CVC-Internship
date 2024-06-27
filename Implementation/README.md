@@ -3,10 +3,10 @@ This section of the repository contains modifications necessary for implementing
 
 ## (Optional) MMSegmentation installation
 
-
+Download [Environment/spec-openmmlab.txt](Environment/spec-openmmlab.txt) and install via `conda create --name openmmlab --file spec-openmmlab.txt`.
 
 ## Decode Head Using Reward Optimisation
-- Add `Code/reward_decode_head.py` to `mmsegmentation/mmseg/models/decode_heads/`.
+- Add [Code/reward_decode_head.py](Code/reward_decode_head.py) to `mmsegmentation/mmseg/models/decode_heads/`.
 - For each **decode head implementation** you plan to use, such as **ASPPHead**, **FCNHead**, etc.:
   - Create a copy of `mmsegmentation/mmseg/models/decode_heads/<HeadName>_head.py` and rename it to `mmsegmentation/mmseg/models/decode_heads/reward_<HeadName>_head.py`.
   - Import using `from .reward_decode_head.py import RewardDecodeHead`.
@@ -22,12 +22,12 @@ This section of the repository contains modifications necessary for implementing
 
 ## Custom Loss Function and Reward Computation
 - **Reward Computation**
-  - To optimise the **mIoU** metric, add `Code/iou_metric_loss.py` to `mmsegmentation/mmseg/models/losses/`.
+  - To optimise the **mIoU** metric, add [Code/iou_metric_loss.py](Code/iou_metric_loss.py) to `mmsegmentation/mmseg/models/losses/`.
   - Register the new loss in `mmsegmentation/mmseg/models/losses/__init__.py`:
     - `from .iou_metric_loss.py import IoUMetricLoss`.
     - Add `'IoUMetricLoss'` to `__all__`.
 - **New loss function**
-  - To incorporate a reward factor into the **cross entropy** function, add `Code/cross_entropy_reward_loss.py` to `mmsegmentation/mmseg/models/losses/`.
+  - To incorporate a reward factor into the **cross entropy** function, add [Code/cross_entropy_reward_loss.py](Code/cross_entropy_reward_loss.py) to `mmsegmentation/mmseg/models/losses/`.
   - Register the new loss in `mmsegmentation/mmseg/models/losses/__init__.py`:
     - `from .iou_metric_loss.py import CrossEntropyRewardLoss`.
     - Add `'CrossEntropyRewardLoss'` to `__all__`.
