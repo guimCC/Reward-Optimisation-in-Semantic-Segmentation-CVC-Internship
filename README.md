@@ -4,7 +4,7 @@
 **Internship Period:** January 24 - June 24
 
 ## Repo Table of Contents
-1. [Implementation Details](#Implementation)
+1. [Implementation Details](Implementation)
 2. [Project Overview Slides](#Resources/rewardOptimisation.md)
 3. [Project Paper](#Todo)
 4. [Experiments](#Todo) <!-- Raw experiment data and insights -->
