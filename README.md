@@ -18,7 +18,7 @@ The theoretical approach is inspired by the paper ["Tuning Computer Vision Model
 
 The implementation is conducted within the [MMSegmentation framework](https://mmsegmentation.readthedocs.io/en/latest/), a platform known for its depth in runtime modifications and widespread use in the scientific community.
 
-## Objectives
+
 
 ## Technologies Used
 
@@ -75,3 +75,16 @@ After performing a **MMSegmentation** training run under an example working dire
   - Plotting the **mIoU trend** competing with the current model.
   - Plotting the **regression line** of the **mIoU** values to see the trend.
   - Plotting the **smoothed mIoU** values, similar to what **TensorBoard** does.
+
+## Datasets
+
+Apart from the reward optimisation implementation, some additional experimentation has been done on other datasets. They have also been integrated to the hole **MMSegmentation** framework.
+
+### EasyPortrait
+
+This is a Face Parsing and Portrait Segmentation Dataset. The [original repo](https://github.com/hukenovs/easyportrait) included some implementation guidelines to **MMSegmentation**. However, they where based on **MMSegmentation 0.x**. Under [EasyPortrait](Datasets/EasyPortrait) are the following scripts necessary for the migration to **MMSegmentation 1.x**.
+- [easyportrait_dataset_config](Datasets/EasyPortrait/easyportrait_512x512.py): Dataset config to use.
+- [model_config_example](Datasets/EasyPortrait/deeplab_easyportrait.py): Example of a model using the new config file.
+- [easyportrait_dataset_class](Datasets/EasyPortrait/easyportrait_face_parsing.py): Dataset's class definition.
+
+Also, you can see those changes applied in a forked repo I made: [Updated EasyPortrait](https://github.com/guimCC/easyportrait)
